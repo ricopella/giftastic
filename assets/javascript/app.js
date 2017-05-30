@@ -24,6 +24,8 @@ input form for user input, add input to search row & display on click
 // global variables
 var gifArray = ["pizza", "spaghetti", "ice cream", "lasagna"];
 
+
+// function re-renders the HTML to display the appropriate content
 function displayGif() {
 
     var gifSearch = $(this).attr("data-name");
@@ -34,11 +36,14 @@ function displayGif() {
         url: queryURL,
         method: "GET"
     }).done(function(response) {
-
         // Creates a div to hold a search
-        var thisGif = $('').prepend()
-
-    });
+        for (j = 0; j < 10; j++) {
+            var thisGif = $('#gifSelection').append(
+                "<hr />" + "<h2> Rating: " + response.data[j].rating + "</h2>" +
+                '<img src="' + response.data[j].images.original_still.url + '"/>'
+            ); // end append 
+        };
+    }); // end ajax
 }
 
 // Function for displaying 10 gifs & their ratings
@@ -66,7 +71,8 @@ function renderButtons() {
 
 
 // This function handles events where the add gif button is clicked
-$("add-gif").on("click", function(event) {
+$("#add-gif").on("click", function(event) {
+    console.log("Add Clicked");
     event.preventDefault();
     // This line of code will grab the input from the textbox
     var gif = $("#gif-input").val().trim();
