@@ -21,7 +21,7 @@ input form for user input, add input to search row & display on click
 
 // --------------------------------------------------------------- 
 
-// global variables
+// starting array of gif categories
 var gifArray = ["pizza", "spaghetti", "ice cream", "lasagna"];
 
 
@@ -38,13 +38,17 @@ function displayGif() {
     }).done(function(response) {
         // Creates a div to hold a search
         for (j = 0; j < 10; j++) {
-            var thisGif = $('#gifSelection').append(
-                "<hr />" + "<h2> Rating: " + response.data[j].rating + "</h2>" +
-                '<img src="' + response.data[j].images.original_still.url + '"/>'
+            var thisGif = $('#gifSelection').append("<hr />" + "<h2> Rating: " + '<a href="#">' + response.data[j].rating + "</h2>" +
+                '<img  class="clicked" src="' + response.data[j].images.original_still.url + '"/>' + '</a>'
             ); // end append 
         };
     }); // end ajax
-}
+
+    // Function handles events where gif animates once clicked
+    $(".clicked").on("click", function() {
+        console.log("this was just clicked");
+    });
+} // end displayGif
 
 // Function for displaying 10 gifs & their ratings
 function renderButtons() {
@@ -67,7 +71,7 @@ function renderButtons() {
         // Added the button to the buttons-view div
         $("#gifRow").append(a);
     }
-}
+} // end renderButtons
 
 
 // This function handles events where the add gif button is clicked
@@ -84,7 +88,8 @@ $("#add-gif").on("click", function(event) {
     renderButtons();
 });
 
-// Adding click event listeners to all elements with a class of "movie"
+
+// Adding click event listeners to all elements with a class of "gif"
 $(document).on("click", ".gif", displayGif);
 
 // Calling the renderButtons function to display the intial buttons
