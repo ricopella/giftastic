@@ -22,11 +22,13 @@ input form for user input, add input to search row & display on click
 // --------------------------------------------------------------- 
 
 // starting array of gif categories
-var gifArray = ["pizza", "spaghetti", "ice cream", "lasagna"];
+var gifArray = ["pizza", "spaghetti", "ice cream", "lasagna", "taco", "pad thai", "donuts"];
 
 
 // function re-renders the HTML to display the appropriate content
 function displayGif() {
+
+    var anmiated = false;
 
     var gifSearch = $(this).attr("data-name");
     var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + gifSearch + "&api_key=dc6zaTOxFJmzC";
@@ -38,16 +40,14 @@ function displayGif() {
     }).done(function(response) {
         // Creates a div to hold a search
         for (j = 0; j < 10; j++) {
-            var thisGif = $('#gifSelection').append("<hr />" + "<h2> Rating: " + '<a href="#">' + response.data[j].rating + "</h2>" +
+            var thisGif = $('#gifSelection').append("<hr />" + "<h2> Rating: " + response.data[j].rating + "</h2>" + '<a href="javascript:void(0)">' +
                 '<img  class="clicked" src="' + response.data[j].images.original_still.url + '"/>' + '</a>'
             ); // end append 
+
         };
+
     }); // end ajax
 
-    // Function handles events where gif animates once clicked
-    $(".clicked").on("click", function() {
-        console.log("this was just clicked");
-    });
 } // end displayGif
 
 // Function for displaying 10 gifs & their ratings
@@ -63,7 +63,7 @@ function renderButtons() {
         // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
         var a = $("<button>");
         // Adds a class of movie to our button
-        a.addClass("gif");
+        a.addClass("gif-btn btn-info");
         // Added a data-attribute
         a.attr("data-name", gifArray[i]);
         // Provided the initial button text
@@ -73,13 +73,18 @@ function renderButtons() {
     }
 } // end renderButtons
 
+// Function handles events where gif animates once clicked
+var animateGif = function(event) {
+    console.log("this was just");
+};
+
 
 // This function handles events where the add gif button is clicked
 $("#add-gif").on("click", function(event) {
     console.log("Add Clicked");
     event.preventDefault();
     // This line of code will grab the input from the textbox
-    var gif = $("#gif-input").val().trim();
+    var gif = $("#gif-input").val().trim().toLowerCase().replace(/\s+/g, "+");
 
     // The movie from the textbox is then added to our array
     gifArray.push(gif);
@@ -89,8 +94,11 @@ $("#add-gif").on("click", function(event) {
 });
 
 
-// Adding click event listeners to all elements with a class of "gif"
-$(document).on("click", ".gif", displayGif);
+// Click event listeners to all elements with a class of "gif"
+$(document).on("click", ".gif-btn", displayGif);
+
+// Click event to animate gif's
+$(document).on("click", ".clicked", animateGif);
 
 // Calling the renderButtons function to display the intial buttons
 renderButtons();

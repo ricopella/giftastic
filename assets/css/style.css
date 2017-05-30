@@ -1,3 +1,11 @@
 /** {
     border: red solid 1px;
 }*/
+
+body {
+    background-color: lightgrey;
+}
+
+.gif-btn {
+    margin: 1%;
+}
