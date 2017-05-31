@@ -38,13 +38,33 @@ function displayGif() {
         url: queryURL,
         method: "GET"
     }).done(function(response) {
-        // Creates a div to hold a search
+
+        // Creates a div img for all 10 gif still frames
         for (j = 0; j < 10; j++) {
             var thisGif = $('#gifSelection').append("<hr />" + "<h2> Rating: " + response.data[j].rating + "</h2>" + '<a href="javascript:void(0)">' +
-                '<img  class="clicked" src="' + response.data[j].images.original_still.url + '"/>' + '</a>'
+                '<img  class="unclicked" id="img' + j + '" src="' + response.data[j].images.original_still.url + '"/>' + '</a>'
             ); // end append 
+        }; // end for loop
 
-        };
+        // click event handles gif animation once clicked
+        $(".unclicked").on("click", function() {
+                var imgID = this.id;
+                var imgIDIndex = imgID.replace("img", "");
+                $(this).attr({
+                    "src": response.data[imgIDIndex].images.original.url,
+                    "class": "clicked"
+                });
+            }) // end .unclicked
+
+        // click event handles gif animation once clicked
+        $(".clicked").on("click", function() {
+                var imgID = this.id;
+                var imgIDIndex = imgID.replace("img", "");
+                $(this).attr({
+                    "src": response.data[imgIDIndex].images.original_still.url,
+                    "class": "unclicked"
+                })
+            }) // end .clicked
 
     }); // end ajax
 
@@ -73,10 +93,7 @@ function renderButtons() {
     }
 } // end renderButtons
 
-// Function handles events where gif animates once clicked
-var animateGif = function(event) {
-    console.log("this was just");
-};
+
 
 
 // This function handles events where the add gif button is clicked
@@ -96,9 +113,6 @@ $("#add-gif").on("click", function(event) {
 
 // Click event listeners to all elements with a class of "gif"
 $(document).on("click", ".gif-btn", displayGif);
-
-// Click event to animate gif's
-$(document).on("click", ".clicked", animateGif);
 
 // Calling the renderButtons function to display the intial buttons
 renderButtons();
