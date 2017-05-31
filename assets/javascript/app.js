@@ -38,12 +38,13 @@ function displayGif() {
         url: queryURL,
         method: "GET"
     }).done(function(response) {
-
+        var result = response.data;
+        console.log(result);
         // Creates a div img for all 10 gif still frames
         for (j = 0; j < 10; j++) {
-            var thisGif = $('#gifSelection').append("<hr />" + "<h2> Rating: " + response.data[j].rating + "</h2>" + '<a href="javascript:void(0)">' +
-                '<img  class="unclicked" id="img' + j + '" src="' + response.data[j].images.original_still.url + '"/>' + '</a>'
-            ); // end append 
+            var thisGif = $('#gifSelection')
+                .append("<hr />" + "<h2> Rating: " + response.data[j].rating + "</h2>" + '<a href="javascript:void(0)">' +
+                    '<img  class="unclicked" id="img' + j + '" src="' + response.data[j].images.original_still.url + '"/>' + '</a>'); // end append 
         }; // end for loop
 
         // click event handles gif animation once clicked
@@ -58,12 +59,12 @@ function displayGif() {
 
         // click event handles gif animation once clicked
         $(".clicked").on("click", function() {
-                var imgID = this.id;
-                var imgIDIndex = imgID.replace("img", "");
+                var imgIDIndex = this.id.replace("img", "");
+                console.log(imgIDIndex);
                 $(this).attr({
                     "src": response.data[imgIDIndex].images.original_still.url,
                     "class": "unclicked"
-                })
+                });
             }) // end .clicked
 
     }); // end ajax
