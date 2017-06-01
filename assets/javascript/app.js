@@ -28,8 +28,6 @@ var gifArray = ["pizza", "spaghetti", "ice cream", "lasagna", "taco", "pad thai"
 // function re-renders the HTML to display the appropriate content
 function displayGif() {
 
-    var anmiated = false;
-
     var gifSearch = $(this).attr("data-name");
     var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + gifSearch + "&api_key=dc6zaTOxFJmzC";
 
@@ -42,30 +40,47 @@ function displayGif() {
         console.log(result);
         // Creates a div img for all 10 gif still frames
         for (j = 0; j < 10; j++) {
-            var thisGif = $('#gifSelection')
-                .append("<hr />" + "<h2> Rating: " + response.data[j].rating + "</h2>" + '<a href="javascript:void(0)">' +
-                    '<img  class="unclicked" id="img' + j + '" src="' + response.data[j].images.original_still.url + '"/>' + '</a>'); // end append 
+            // set rating for each image
+            var rating = $("<p>").text("Rating: " + result[j].rating);
+            var imgDiv = $("<div>").addClass("gifContentBox");
+            var imgContainer = $("<div>").addClass("imgContainer");
+            // set image attributes
+            var image = $("<img>")
+                // set detault src to still image
+                .attr("src", result[j].images.original_still.url)
+                // data-animated changes to gif
+                .data("animated", result[j].images.original.url)
+                // data-still changes back to still
+                .data("still", result[j].images.original_still.url)
+                // default data-state to still image
+                .attr("data-state", "still");
+
+            // append image & rating to imgContainer, then append imgContainer to page
+            imgContainer.append(image);
+            imgContainer.append(rating);
+            imgDiv.append(imgContainer);
+            $('#gifSelection').prepend(imgDiv);
+
         }; // end for loop
 
         // click event handles gif animation once clicked
-        $(".unclicked").on("click", function() {
-                var imgID = this.id;
-                var imgIDIndex = imgID.replace("img", "");
-                $(this).attr({
-                    "src": response.data[imgIDIndex].images.original.url,
-                    "class": "clicked"
-                });
-            }) // end .unclicked
-
-        // click event handles gif animation once clicked
-        $(".clicked").on("click", function() {
-                var imgIDIndex = this.id.replace("img", "");
-                console.log(imgIDIndex);
-                $(this).attr({
-                    "src": response.data[imgIDIndex].images.original_still.url,
-                    "class": "unclicked"
-                });
-            }) // end .clicked
+        $("img").on("click", function() {
+            // variable to store current data state
+            var gifData = $(this).attr("data-state");
+            console.log(this);
+            // conditional to check if still or animated
+            if (gifData === "still") {
+                // if gif is still, change to animate
+                $(this).attr("src", $(this).data("animated"));
+                // update data-state for next event click
+                $(this).attr("data-state", "animated");
+            } else {
+                // if data-state is anmite - change src to still
+                $(this).attr("src", $(this).data("still"));
+                // change data-state back to still for next event handler
+                $(this).attr("data-state", $(this).data("still"));
+            };
+        }); // end #gifSelection click
 
     }); // end ajax
 
