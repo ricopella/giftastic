@@ -29,7 +29,7 @@ var gifArray = ["pizza", "spaghetti", "ice cream", "lasagna", "taco", "pad thai"
 function displayGif() {
 
     var gifSearch = $(this).attr("data-name");
-    var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + gifSearch + "&api_key=dc6zaTOxFJmzC";
+    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + gifSearch + "&api_key=dc6zaTOxFJmzC";
 
     // Creates AJAX call for the specific movie button being clicked
     $.ajax({
