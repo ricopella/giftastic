@@ -1,11 +1,27 @@
-/** {
+* {
     border: red solid 1px;
-}*/
+}
 
 body {
     background-color: lightgrey;
 }
 
+#gifRow {
+    margin: 2% 0 2% 0;
+}
+
 .gif-btn {
     margin: 1%;
+}
+
+p {
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+}
+
+img {
+    margin: 0 auto;
+    height: 200px;
+    width: 100%
 }

@@ -29,7 +29,7 @@ var gifArray = ["pizza", "spaghetti", "ice cream", "lasagna", "taco", "pad thai"
 function displayGif() {
 
     var gifSearch = $(this).attr("data-name");
-    var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + gifSearch + "&api_key=dc6zaTOxFJmzC";
+    var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&q=" + gifSearch;
 
     // Creates AJAX call for the specific movie button being clicked
     $.ajax({
@@ -42,22 +42,22 @@ function displayGif() {
         for (j = 0; j < 10; j++) {
             // set rating for each image
             var rating = $("<p>").text("Rating: " + result[j].rating);
-            var imgDiv = $("<div>").addClass("gifContentBox");
+            var imgDiv = $("<div>").addClass("gifContentBox col-md-4");
             var imgContainer = $("<div>").addClass("imgContainer");
             // set image attributes
             var image = $("<img>")
                 // set detault src to still image
-                .attr("src", result[j].images.original_still.url)
+                .attr("src", result[j].images.fixed_height_still.url)
                 // data-animated changes to gif
-                .data("animated", result[j].images.original.url)
+                .data("animated", result[j].images.fixed_height.url)
                 // data-still changes back to still
-                .data("still", result[j].images.original_still.url)
+                .data("still", result[j].images.fixed_height_still.url)
                 // default data-state to still image
                 .attr("data-state", "still");
 
             // append image & rating to imgContainer, then append imgContainer to page
-            imgContainer.append(image);
             imgContainer.append(rating);
+            imgContainer.append(image);
             imgDiv.append(imgContainer);
             $('#gifSelection').prepend(imgDiv);
 
