@@ -23,7 +23,8 @@ body {
     padding: 2%;
 }
 
-.gif-btn {
+.gif-btn,
+#gif-input {
     margin: .5%;
 }
 

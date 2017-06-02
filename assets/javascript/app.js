@@ -92,13 +92,11 @@ function displayGif() {
 function renderButtons() {
 
     // Deletes the gifs prior to adding new gifs
-    // (this is necessary otherwise you will have repeat buttons)
     $("#gifRow").empty();
     // Loops through the array of movies
     for (var i = 0; i < gifArray.length; i++) {
 
-        // Then dynamicaly generates buttons for each gif in the array
-        // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
+        // creates a new button element
         var a = $("<button>");
         // Adds a class of movie to our button
         a.addClass("gif-btn btn btn-info");
@@ -115,7 +113,7 @@ function renderButtons() {
 $("#add-gif").on("click", function(event) {
     event.preventDefault();
     // This line of code will grab the input from the textbox
-    var gif = $("#gif-input").val().trim().toLowerCase().replace(/\s+/g, "+");
+    var gif = $("#gif-input").val().trim().toLowerCase();
     // The movie from the textbox is then added to our array
     gifArray.push(gif);
     // clear form
@@ -131,7 +129,7 @@ $('#gif-input').on("keypress", function(event) {
         $(this).attr("disabled", "disabled");
         event.preventDefault();
         // This line of code will grab the input from the textbox
-        var gif = $("#gif-input").val().trim().toLowerCase().replace(/\s+/g, "+");
+        var gif = $("#gif-input").val().trim().toLowerCase();
         // The movie from the textbox is then added to our array
         gifArray.push(gif);
         // re-enable input for next input
