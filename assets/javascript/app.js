@@ -38,8 +38,10 @@ function displayGif() {
         url: queryURL,
         method: "GET"
     }).done(function(response) {
+        // store query in variable
         var result = response.data;
-        console.log(result);
+        // removes previously selected gifs
+        $("#gifSelection").empty();
         // Creates a div img for all 10 gif still frames
         for (j = 0; j < 10; j++) {
             // set rating for each image
@@ -96,7 +98,7 @@ function renderButtons() {
     // Loops through the array of movies
     for (var i = 0; i < gifArray.length; i++) {
 
-        // creates a new button element
+        // Creates a new button element
         var a = $("<button>");
         // Adds a class of movie to our button
         a.addClass("gif-btn btn btn-info");
