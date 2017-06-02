@@ -20,7 +20,11 @@ input form for user input, add input to search row & display on click
  */
 
 // starting array of gif categories
-var gifArray = ["pizza", "spaghetti", "ice cream", "lasagna", "taco", "pad thai", "donuts", "sushi", "bacon", "pb&j", "m&m"];
+var gifArray = [
+    "ken griffey jr", "shaq", "deion sanders", "wayne gretzky", "emmitt smith",
+    "michael jordan", "dennis rodman", "nomar garciaparra", "tiger woods",
+    "hulk hogan", "charles barkley", "larry bird", "brett farve"
+];
 
 
 // function re-renders the HTML to display the appropriate content
