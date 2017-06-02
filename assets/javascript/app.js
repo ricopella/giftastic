@@ -19,10 +19,8 @@ input form for user input, add input to search row & display on click
 
  */
 
-// --------------------------------------------------------------- 
-
 // starting array of gif categories
-var gifArray = ["pizza", "spaghetti", "ice cream", "lasagna", "taco", "pad thai", "donuts"];
+var gifArray = ["pizza", "spaghetti", "ice cream", "lasagna", "taco", "pad thai", "donuts", "sushi", "bacon", "pb&j", "m&m"];
 
 
 // function re-renders the HTML to display the appropriate content
@@ -56,8 +54,8 @@ function displayGif() {
                 .attr("data-state", "still");
 
             // append image & rating to imgContainer, then append imgContainer to page
-            imgContainer.append(rating);
             imgContainer.append(image);
+            imgContainer.append(rating);
             imgDiv.append(imgContainer);
             $('#gifSelection').prepend(imgDiv);
 
@@ -99,7 +97,7 @@ function renderButtons() {
         // This code $("<button>") is all jQuery needs to create the beginning and end tag. (<button></button>)
         var a = $("<button>");
         // Adds a class of movie to our button
-        a.addClass("gif-btn btn-info");
+        a.addClass("gif-btn btn btn-info");
         // Added a data-attribute
         a.attr("data-name", gifArray[i]);
         // Provided the initial button text
@@ -109,23 +107,37 @@ function renderButtons() {
     }
 } // end renderButtons
 
-
-
-
 // This function handles events where the add gif button is clicked
 $("#add-gif").on("click", function(event) {
-    console.log("Add Clicked");
     event.preventDefault();
     // This line of code will grab the input from the textbox
     var gif = $("#gif-input").val().trim().toLowerCase().replace(/\s+/g, "+");
-
     // The movie from the textbox is then added to our array
     gifArray.push(gif);
-
+    // clear form
+    $("input[type=text]").val("");
     // Calling renderButtons which handles the processing of our gif array
     renderButtons();
 });
 
+// This function handles events where the user pressed enter in gif-form 
+$('#gif-input').on("keypress", function(event) {
+    if (event.which === 13) {
+        // dable input to prevent multiple submits
+        $(this).attr("disabled", "disabled");
+        event.preventDefault();
+        // This line of code will grab the input from the textbox
+        var gif = $("#gif-input").val().trim().toLowerCase().replace(/\s+/g, "+");
+        // The movie from the textbox is then added to our array
+        gifArray.push(gif);
+        // re-enable input for next input
+        $(this).removeAttr("disabled");
+        // clear form
+        $("input[type=text]").val("");
+    } // end for loop
+    // Calling renderButtons which handles the processing of our gif array
+    renderButtons();
+});
 
 // Click event listeners to all elements with a class of "gif"
 $(document).on("click", ".gif-btn", displayGif);
