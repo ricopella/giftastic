@@ -10,8 +10,12 @@ body {
     margin: 2% 0 2% 0;
 }
 
+#gif-input {
+    width: 100%;
+}
+
 .gif-btn {
-    margin: 1%;
+    margin: .5%;
 }
 
 p {

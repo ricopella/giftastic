@@ -72,11 +72,11 @@ function displayGif() {
                 $(this).attr("src", $(this).data("animated"));
                 // update data-state for next event click
                 $(this).attr("data-state", "animated");
-            } else {
+            } else if (gifData === "animated") {
                 // if data-state is anmite - change src to still
                 $(this).attr("src", $(this).data("still"));
                 // change data-state back to still for next event handler
-                $(this).attr("data-state", $(this).data("still"));
+                $(this).attr("data-state", "still");
             };
         }); // end #gifSelection click
 
