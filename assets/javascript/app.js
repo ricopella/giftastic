@@ -38,9 +38,9 @@ function displayGif() {
     var gifSearchRating = "pg";
     // conditionals to store rating value for api search
     if (gifSearchValue === "1") {
-        gifSearchRating = "g";
+        gifSearchRating = "y";
     } else if (gifSearchValue === "2") {
-        gifSerachRating = "pg";
+        gifSearchRating = "g";
     } else if (gifSearchValue === "3") {
         gifSearchRating = "pg";
     } else if (gifSearchValue === "4") {
@@ -89,7 +89,6 @@ function displayGif() {
         $("img").on("click", function() {
             // variable to store current data state
             var gifData = $(this).attr("data-state");
-            console.log(this);
             // conditional to check if still or animated
             if (gifData === "still") {
                 // if gif is still, change to animate
@@ -146,7 +145,7 @@ $("#add-gif").on("click", function(event) {
 // This function handles events where the user pressed enter in gif-form 
 $('#gif-input').on("keypress", function(event) {
     if (event.which === 13) {
-        // dable input to prevent multiple submits
+        // disable input to prevent multiple submits
         $(this).attr("disabled", "disabled");
         event.preventDefault();
         // This line of code will grab the input from the textbox
@@ -162,8 +161,11 @@ $('#gif-input').on("keypress", function(event) {
     renderButtons();
 });
 
+// This function handles the filtering of ratings & updates html
 $("#gif-range").on("input change", function() {
+    // store current value of range
     var rangeValue = $(this).val();
+    // conditionals for which rating user selected
     if (rangeValue === "1") {
         $("#rating").html("Youth (Y)");
     } else if (rangeValue === "2") {
@@ -175,7 +177,6 @@ $("#gif-range").on("input change", function() {
     } else if (rangeValue === "5") {
         $("#rating").text("Restricted (R)");
     }
-    console.log(rangeValue);
 });
 
 // on page load - display default rating
