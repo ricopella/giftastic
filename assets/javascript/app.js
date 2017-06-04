@@ -30,8 +30,26 @@ var gifArray = [
 // function re-renders the HTML to display the appropriate content
 function displayGif() {
 
+    // store name of selected button
     var gifSearch = $(this).attr("data-name");
-    var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&q=" + gifSearch;
+    // store selected Rating
+    var gifSearchValue = $("#gif-range").val();
+    // default search to pg
+    var gifSearchRating = "pg";
+    // conditionals to store rating value for api search
+    if (gifSearchValue === "1") {
+        gifSearchRating = "g";
+    } else if (gifSearchValue === "2") {
+        gifSerachRating = "pg";
+    } else if (gifSearchValue === "3") {
+        gifSearchRating = "pg";
+    } else if (gifSearchValue === "4") {
+        gifSearchRating = "pg-13";
+    } else if (gifSearchValue === "5") {
+        gifSearchRating = "r";
+    };
+
+    var queryURL = "https://api.giphy.com/v1/gifs/search?api_key=dc6zaTOxFJmzC&q=" + gifSearch + "&rating=" + gifSearchRating;
 
     // Creates AJAX call for the specific movie button being clicked
     $.ajax({
@@ -116,7 +134,8 @@ $("#add-gif").on("click", function(event) {
     event.preventDefault();
     // This line of code will grab the input from the textbox
     var gif = $("#gif-input").val().trim().toLowerCase();
-    // The movie from the textbox is then added to our array
+    var gifRating = $()
+        // The movie from the textbox is then added to our array
     gifArray.push(gif);
     // clear form
     $("input[type=text]").val("");
@@ -142,6 +161,26 @@ $('#gif-input').on("keypress", function(event) {
     // Calling renderButtons which handles the processing of our gif array
     renderButtons();
 });
+
+$("#gif-range").on("input change", function() {
+    var rangeValue = $(this).val();
+    if (rangeValue === "1") {
+        $("#rating").html("Youth (Y)");
+    } else if (rangeValue === "2") {
+        $("#rating").text("General Audiences (G)");
+    } else if (rangeValue === "3") {
+        $("#rating").text("Parental Guidance (PG)");
+    } else if (rangeValue === "4") {
+        $("#rating").text("Parental Guidance suggested (PG-13)");
+    } else if (rangeValue === "5") {
+        $("#rating").text("Restricted (R)");
+    }
+    console.log(rangeValue);
+});
+
+// on page load - display default rating
+$("#rating").html("General Audiances (G)");
+
 
 // Click event listeners to all elements with a class of "gif"
 $(document).on("click", ".gif-btn", displayGif);
