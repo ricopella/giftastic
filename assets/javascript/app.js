@@ -180,7 +180,7 @@ $("#gif-range").on("input change", function() {
 });
 
 // on page load - display default rating
-$("#rating").html("General Audiances (G)");
+$("#rating").html("General Audiences (G)");
 
 
 // Click event listeners to all elements with a class of "gif"
